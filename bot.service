@@ -1,0 +1,33 @@
+[Unit]
+Description=Telegram Video Downloader Bot
+Documentation=https://github.com/your-repo/telegram-video-bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Replace with your actual user and path
+User=your-user
+Group=your-user
+WorkingDirectory=/home/your-user/telegram-video-bot
+EnvironmentFile=/home/your-user/telegram-video-bot/.env
+ExecStart=/home/your-user/telegram-video-bot/venv/bin/python bot.py
+Restart=on-failure
+RestartSec=10
+RestartPreventExitStatus=SIGTERM
+# Logging to journald
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=tg-video-bot
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/home/your-user/telegram-video-bot/downloads
+# Resource limits
+LimitNOFILE=65536
+MemoryLimit=512M
+
+[Install]
+WantedBy=multi-user.target
